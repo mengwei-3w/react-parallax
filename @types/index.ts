@@ -20,7 +20,7 @@ export type ParallaxProps = {
     onLoad?: (event: Event) => void;
     bgStyle?: { [key: string]: any };
     blur?: BlurProp;
-    scale?: number,
+    transform?: (percentage: number) => string,
     children?: React.ReactNode;
     className?: string;
     contentClassName?: string;

@@ -179,7 +179,7 @@ class Parallax extends ParallaxClass {
     };
 
     setBackgroundPosition(percentage: number): void {
-        const { disabled, strength, scale } = this.props;
+        const { disabled, strength } = this.props;
         const bgStyle: StyleObjectType = {
             ...this.state.bgStyle,
         };
@@ -189,9 +189,8 @@ class Parallax extends ParallaxClass {
             const pos = (inverse ? strength : 0) - strength * percentage;
             let transform = `translate3d(-50%, ${pos}px, 0)`;
 
-            if (scale) {
-                const scaleRate = percentage * scale;
-                transform = `${transform} scale(${scaleRate}, ${scaleRate});`;
+            if (this.props.transform) {
+                transform = `${transform} ${this.props.transform(percentage)}`;
             }
             bgStyle.WebkitTransform = transform;
             bgStyle.transform = transform;
@@ -207,7 +206,7 @@ class Parallax extends ParallaxClass {
      * sets position for the background image
      */
     setImagePosition(percentage: number, autoHeight = false): void {
-        const { disabled, strength, blur, scale } = this.props;
+        const { disabled, strength, blur } = this.props;
         const height = autoHeight ? 'auto' : `${this.getImageHeight()}px`;
         const width = !autoHeight ? 'auto' : `${this.contentWidth}px`;
         const imgStyle: StyleObjectType = {
@@ -226,10 +225,10 @@ class Parallax extends ParallaxClass {
                 filter = `blur(${getBlurValue(this.isDynamicBlur, blur, percentage)}px)`;
             }
 
-            if (scale) {
-                const scaleRate = percentage * scale;
-                transform = `${transform} scale(${scaleRate}, ${scaleRate});`;
+            if (this.props.transform) {
+                transform = `${transform} ${this.props.transform(percentage)}`;
             }
+
             imgStyle.WebkitTransform = transform;
             imgStyle.transform = transform;
             imgStyle.WebkitFilter = filter;
