@@ -20,6 +20,7 @@ export type ParallaxProps = {
     onLoad?: (event: Event) => void;
     bgStyle?: { [key: string]: any };
     blur?: BlurProp;
+    scale?: number,
     children?: React.ReactNode;
     className?: string;
     contentClassName?: string;
@@ -50,9 +51,9 @@ export type ParallaxChildrenProps = {
     onMount(node: HTMLDivElement): void;
 };
 
-export class Parallax extends React.Component<ParallaxProps, ParallaxState> {}
+export class Parallax extends React.Component<ParallaxProps, ParallaxState> { }
 
-export class Background extends React.Component<BackgroundProps, {}> {}
+export class Background extends React.Component<BackgroundProps, {}> { }
 
 export interface StyleObjectType {
     [key: string]: string;

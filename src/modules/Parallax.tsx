@@ -202,7 +202,7 @@ class Parallax extends ParallaxClass {
      * sets position for the background image
      */
     setImagePosition(percentage: number, autoHeight = false): void {
-        const { disabled, strength, blur } = this.props;
+        const { disabled, strength, blur, scale } = this.props;
         const height = autoHeight ? 'auto' : `${this.getImageHeight()}px`;
         const width = !autoHeight ? 'auto' : `${this.contentWidth}px`;
         const imgStyle: StyleObjectType = {
@@ -215,10 +215,15 @@ class Parallax extends ParallaxClass {
             const inverse = strength < 0;
             const pos = (inverse ? strength : 0) - strength * percentage;
 
-            const transform = `translate3d(-50%, ${pos}px, 0)`;
+            let transform = `translate3d(-50%, ${pos}px, 0)`;
             let filter = 'none';
             if (blur) {
                 filter = `blur(${getBlurValue(this.isDynamicBlur, blur, percentage)}px)`;
+            }
+
+            if (scale) {
+                const scaleRate = percentage * scale;
+                transform = `${transform} scale(${scaleRate}, ${scaleRate});`;
             }
             imgStyle.WebkitTransform = transform;
             imgStyle.transform = transform;
