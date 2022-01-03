@@ -179,7 +179,7 @@ class Parallax extends ParallaxClass {
     };
 
     setBackgroundPosition(percentage: number): void {
-        const { disabled, strength } = this.props;
+        const { disabled, strength, scale } = this.props;
         const bgStyle: StyleObjectType = {
             ...this.state.bgStyle,
         };
@@ -187,7 +187,12 @@ class Parallax extends ParallaxClass {
         if (!disabled) {
             const inverse = strength < 0;
             const pos = (inverse ? strength : 0) - strength * percentage;
-            const transform = `translate3d(-50%, ${pos}px, 0)`;
+            let transform = `translate3d(-50%, ${pos}px, 0)`;
+
+            if (scale) {
+                const scaleRate = percentage * scale;
+                transform = `${transform} scale(${scaleRate}, ${scaleRate});`;
+            }
             bgStyle.WebkitTransform = transform;
             bgStyle.transform = transform;
         }
